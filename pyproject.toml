@@ -10,7 +10,7 @@ readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
 requires-python = ">=3.11"
-authors = [{ name = "GSPS contributors" }]
+authors = [{ name = "Edward Scannell" }]
 keywords = ["sentiment", "stance", "provenance", "media-analysis", "privacy"]
 classifiers = [
     "Development Status :: 2 - Pre-Alpha",

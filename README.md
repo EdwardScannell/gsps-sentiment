@@ -40,9 +40,53 @@ pip install -e ".[dev]"     # from a clone
 make check                  # lint, strict types, tests with coverage
 ```
 
+## Quick start
+
+```python
+from pathlib import Path
+
+from gsps_sentiment import Allowlist, claim_from_article
+
+allowlist = Allowlist.load(Path("tests/fixtures/ALLOWLIST_20261112.csv"))
+
+result = claim_from_article(
+    {
+        "url": "https://institute.example.org/briefs/ai-screening",
+        "claim": "AI resume screens now check claims against evidence.",
+        "published_on": "2026-11-06",
+        "topic": "hiring",
+        "stance": "supports",
+        "author": "Jordan Example-Writer",
+    },
+    allowlist,
+)
+print(result.claim.publisher, result.claim.stance, result.claim.allowlist_version)
+# Example Policy Institute supports 20261112
+print(result.dropped_identity_fields)
+# ('author',)
+
+refused = claim_from_article({"url": "https://forum.example.net/t/1"}, allowlist)
+print(refused.accepted, refused.decision.reason)
+# False not on the allowlist: forum.example.net
+```
+
+An allowlist is a dated file, `ALLOWLIST_YYYYMMDD.csv`, with columns `domain`,
+`publisher` and `kind`. A listed domain covers its subdomains; anything else is refused.
+
+## Layout
+
+```
+src/gsps_sentiment/
+  allowlist.py   dated allowlist, host checks, AllowDecision
+  claim.py       Claim (no identity fields), ingest that drops people
+tests/
+  fixtures/ALLOWLIST_20261112.csv   synthetic publishers on .example domains
+```
+
 ## Status
 
-Early. Built in seven phases; see [`ROADMAP.md`](ROADMAP.md) and the issues.
+Phase 1 of 7 is done. See [`ROADMAP.md`](ROADMAP.md) for what comes next; plans are also
+tracked in the repository's issues.
 
 ## License
 

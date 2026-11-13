@@ -3,7 +3,7 @@
 gsps-sentiment is built in seven phases. Each lands as its own pull request with tests,
 and CI stays green on every commit.
 
-1. [ ] **Claim record, allowlist, identity drop.** A claim keeps publisher, URL, text,
+1. [x] **Claim record, allowlist, identity drop.** A claim keeps publisher, URL, text,
    date, topic and stance; a dated allowlist decides which publishers are read; author,
    byline and handle fields are dropped at ingest and cannot be stored.
 2. [ ] **PII filter for claim text.** Remove person names and @handles from claim text
